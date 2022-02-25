@@ -19,7 +19,7 @@ homeRouter
     .post('/', async(req, res) => {
         try{
             const {title} = req.body;
-            const insertEntry = await new TodoRecord({title: title.trim()});
+            const insertEntry = await new TodoRecord({title});
             await insertEntry.insert();
             const toDoListEntries = await TodoRecord.findAll();
             res.status(201).render('home/home', {
