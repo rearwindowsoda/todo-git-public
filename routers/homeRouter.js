@@ -19,7 +19,7 @@ homeRouter
     .post('/', async(req, res) => {
         try{
             const {title} = req.body;
-            const insertEntry = await new TodoRecord(title.trim());
+            const insertEntry = await new TodoRecord({title: title.trim()});
             await insertEntry.insert();
             const toDoListEntries = await TodoRecord.findAll();
             res.status(201).render('home/home', {
@@ -47,7 +47,7 @@ homeRouter
     .put('/:id', async (req, res) => {
         try{
             const editedEntry = await TodoRecord.find(req.params.id);
-            editedEntry.title= req.body.title;
+            editedEntry.title= req.body.title.trim();
             console.log(editedEntry)
             await editedEntry.update();
             const toDoListEntries = await TodoRecord.findAll();
