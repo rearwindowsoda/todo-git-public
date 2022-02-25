@@ -17,10 +17,11 @@ class TodoRecord {
     }
   }
   async insert() {
+    this._validate()
     this.id = this.id ?? uuid();
     await pool.execute('INSERT INTO `todos` VALUES(:id, :title)', {
       id: this.id,
-      title: this.title.trim(),
+      title: this.title,
     });
     return this.id;
   }
@@ -51,6 +52,7 @@ class TodoRecord {
     }
 
   async update() {
+    this._validate()
     if (!this.id) {
       throw new Error('Todo has no ID!');
     }
