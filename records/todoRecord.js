@@ -17,7 +17,6 @@ class TodoRecord {
     }
   }
   async insert() {
-    this._validate()
     this.id = this.id ?? uuid();
     await pool.execute('INSERT INTO `todos` VALUES(:id, :title)', {
       id: this.id,
@@ -33,8 +32,8 @@ class TodoRecord {
   }
   static async find(id) {
     const [results] = await pool.execute(
-      'SELECT * FROM `todos` WHERE `id` = :id',
-      { id: id }
+        'SELECT * FROM `todos` WHERE `id` = :id',
+        { id: id }
     );
     return results.length === 1 ? new TodoRecord(results[0]) : null;
   }
@@ -42,17 +41,16 @@ class TodoRecord {
     const [results] = await pool.execute(
         'SELECT * from `todos`');
     const mappedResults = results.map(element => new TodoRecord(element));
-   if(mappedResults.length >= 1){
-     return mappedResults
-   }
-   else{
-     return null
-   }
-
+    if(mappedResults.length >= 1){
+      return mappedResults
+    }
+    else{
+      return null
     }
 
+  }
+
   async update() {
-    this._validate()
     if (!this.id) {
       throw new Error('Todo has no ID!');
     }
