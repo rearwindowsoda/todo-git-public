@@ -20,7 +20,7 @@ class TodoRecord {
     this.id = this.id ?? uuid();
     await pool.execute('INSERT INTO `todos` VALUES(:id, :title)', {
       id: this.id,
-      title: this.title,
+      title: this.title.trim(),
     });
     return this.id;
   }
