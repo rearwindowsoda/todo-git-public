@@ -1,0 +1,52 @@
+<main class="container">
+<h1>Lista rzeczy do zrobienia</h1>
+    <section>
+<div id="show-list">
+
+    <ul class="titles">
+        {{#if toDoListEntries}}
+            {{#each @root.toDoListEntries}}
+                {{log this}}
+                <article>
+    <p class="one-entry">{{this.title}}</p>
+                    <form method="POST" action="/{{this.id}}?_method=PUT">
+                        <details>
+                            <summary>Zmodyfikuj treść zadania</summary>
+                            <input type="text" minlength="5" name="title" value="{{this.title}}" placeholder="Zmodyfikuj treść zadania" required>
+                            <button class="short" type="submit">Modyfikuj</button>
+                        </details>
+
+                    </form>
+                    <form method="POST" action="/{{this.id}}?_method=DELETE">
+                        <button class="short" type="submit">Usuń</button>
+                    </form>
+
+                </article>
+
+
+            {{/each}}
+        {{else}}
+            <article> <p class="one-entry">
+                Wszystko zrobione
+            </p></article>
+
+        {{/if}}
+
+
+    </ul>
+
+
+</div>
+    </section>
+    <section>
+<div id="add-to-list">
+    <form method="POST" action="/">
+        <label><h2>Dodaj rzecz do zrobienia:</h2>
+            <input type="text" minlength="5" name="title" placeholder="Wpisz treść zadania tutaj" required>
+            <input type="submit" value="Dodaj do listy">
+        </label>
+    </form>
+
+</div>
+    </section>
+</main>
